@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>测测你是什么小动物 · 萌系人格小测试</title>
+<meta name="description" content="24 个生活瞬间，8 个维度，16 种小动物。2 分钟测出你心里住着哪只毛茸茸。" />
+<meta name="theme-color" content="#FFF3F5" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
+<style>
+/* ============================================================
+   萌系人格小测试 — 样式
+   ============================================================ */
+
+:root {
+  --ink: #3B3743;
+  --muted: #8A8496;
+  --line: #EFE9F0;
+  --pink: #FF8FA3;
+  --pink-deep: #F2708A;
+  --pink-soft: #FFF1F4;
+  --blue: #7CB3F0;
+  --blue-soft: #EEF5FF;
+  --cream: #FFFBF7;
+  --card: #FFFFFF;
+  --shadow: 0 18px 48px rgba(122, 106, 140, 0.12);
+  --shadow-sm: 0 6px 18px rgba(122, 106, 140, 0.10);
+  --radius: 28px;
+  --font: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+          "Microsoft YaHei", "Noto Sans SC", "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  background: linear-gradient(165deg, #FFF6F1 0%, #F3F7FF 45%, #FBF2FF 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- 背景装饰 ---------- */
+.bg-deco { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+.bg-deco .paw, .bg-deco .blob { position: absolute; opacity: 0.5; }
+.paw { font-size: 22px; filter: saturate(0.6); }
+.p1 { top: 34%;  left: 3%;  transform: rotate(-18deg); }
+.p2 { top: 26%; right: 8%; transform: rotate(22deg); }
+.p3 { bottom: 18%; left: 10%; font-size: 18px; }
+.p4 { bottom: 8%; right: 12%; transform: rotate(-40deg); }
+.blob { border-radius: 50%; filter: blur(46px); opacity: 0.55; }
+.b1 { width: 320px; height: 320px; background: #FFD9E1; top: -90px; right: -80px; }
+.b2 { width: 280px; height: 280px; background: #D8E7FF; bottom: -100px; left: -70px; }
+
+/* ---------- 布局 ---------- */
+.app {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 44px 20px 48px;
+}
+
+.screen { display: none; animation: fadeUp 0.42s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.screen.is-active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- 开场 ---------- */
+.eyebrow {
+  margin: 0 0 18px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+.title {
+  margin: 0 0 16px;
+  font-size: 46px;
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+  font-weight: 800;
+}
+
+.title .hl {
+  background: linear-gradient(100deg, #FF8FA3 10%, #F2708A 40%, #9B8CF0 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lead {
+  margin: 0 0 8px;
+  font-size: 15.5px;
+  color: #6E6879;
+}
+
+.avatar-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 4px;
+  margin: 18px 0 26px;
+}
+.avatar-row svg { filter: drop-shadow(0 10px 18px rgba(120, 100, 140, 0.16)); }
+.avatar-row svg:nth-child(1) { transform: rotate(-7deg); }
+.avatar-row svg:nth-child(2) { transform: translateY(-10px) scale(1.1); }
+.avatar-row svg:nth-child(3) { transform: rotate(7deg); }
+
+/* ---------- 按钮 ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.btn-primary {
+  width: 100%;
+  color: #fff;
+  background: linear-gradient(120deg, #FF9AAC, #F2708A 55%, #E86A93);
+  box-shadow: 0 12px 26px rgba(242, 112, 138, 0.34);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(242, 112, 138, 0.42); }
+.btn-primary:active { transform: translateY(0); }
+.btn-primary .arrow { transition: transform 0.16s ease; }
+.btn-primary:hover .arrow { transform: translateX(4px); }
+
+.btn-ghost {
+  flex: 1;
+  color: #5E5870;
+  background: #F7F4F9;
+  box-shadow: none;
+}
+.btn-ghost:hover { background: #F0EBF4; transform: translateY(-1px); }
+
+.link-btn {
+  border: none;
+  background: transparent;
+  padding: 4px 2px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.link-btn:hover { color: var(--pink-deep); }
+
+.meta {
+  margin: 16px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+}
+.meta.small { margin-top: 6px; font-size: 12.5px; opacity: 0.85; }
+
+/* ---------- 答题 ---------- */
+.quiz-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.step { font-size: 13px; color: var(--muted); letter-spacing: 0.08em; }
+
+.progress {
+  height: 6px;
+  border-radius: 99px;
+  background: #EFE9F1;
+  overflow: hidden;
+}
+.progress span {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #FFB4C1, #F2708A);
+  transition: width 0.35s cubic-bezier(0.3, 0.9, 0.3, 1);
+}
+
+.q-card {
+  position: relative;
+  margin-top: 26px;
+  padding: 30px 26px 26px;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.q-index {
+  position: absolute;
+  top: 18px;
+  right: 26px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #DED6E4;
+}
+
+.q-text {
+  margin: 0 0 22px;
+  padding-right: 34px;
+  font-size: 21px;
+  line-height: 1.55;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.options { display: flex; flex-direction: column; gap: 11px; }
+.options.anim-in { animation: fadeUp 0.3s ease both; }
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  width: 100%;
+  padding: 15px 17px;
+  text-align: left;
+  font-family: inherit;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: #4A4458;
+  background: #FBF8FB;
+  border: 2px solid transparent;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: transform 0.14s ease, background 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+}
+
+.option:hover {
+  background: var(--pink-soft);
+  border-color: #FFC9D4;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(242, 112, 138, 0.12);
+}
+
+.option.is-picked {
+  background: var(--pink-soft);
+  border-color: var(--pink);
+  transform: scale(0.995);
+}
+
+.option-key {
+  flex: 0 0 26px;
+  height: 26px;
+  margin-top: 2px;
+  border-radius: 9px;
+  background: #F1EBF4;
+  color: #9A93A6;
+  font-size: 12.5px;
+  font-weight: 800;
+  line-height: 26px;
+  text-align: center;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+.option:hover .option-key,
+.option.is-picked .option-key { background: var(--pink); color: #fff; }
+
+.kbd-hint {
+  margin: 18px 0 0;
+  font-size: 12.5px;
+  color: #A9A2B4;
+  text-align: center;
+}
+kbd {
+  display: inline-block;
+  min-width: 20px;
+  padding: 1px 5px;
+  margin: 0 1px;
+  border-radius: 6px;
+  background: #F2EDF5;
+  border-bottom: 2px solid #E3DAE8;
+  font-family: var(--font);
+  font-size: 11.5px;
+  color: #7C7488;
+}
+
+/* ---------- 结果 ---------- */
+.result-card {
+  position: relative;
+  padding: 28px 26px 26px;
+  background: var(--card);
+  border-radius: 32px;
+  box-shadow: var(--shadow);
+}
+.link-btn.home { position: absolute; top: 16px; left: 22px; }
+
+.shared-note {
+  margin: 22px 0 6px;
+  padding: 9px 14px;
+  border-radius: 12px;
+  background: var(--blue-soft);
+  color: #5B7FB5;
+  font-size: 13px;
+  text-align: center;
+}
+
+.result-head {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.result-avatar {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 176px;
+  height: 176px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #FFF4F6, #FFE6EC 62%, #FFDCE6);
+  box-shadow: inset 0 0 0 6px rgba(255, 255, 255, 0.7);
+}
+.result-avatar svg { animation: bob 3.2s ease-in-out infinite; }
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.result-id { min-width: 0; }
+.result-kicker { margin: 0 0 2px; font-size: 12.5px; color: var(--muted); letter-spacing: 0.08em; }
+#result-name { margin: 0; font-size: 32px; font-weight: 800; line-height: 1.3; }
+.result-title {
+  margin: 2px 0 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--pink-deep);
+}
+.result-tag { margin: 0; font-size: 13px; color: var(--muted); }
+
+.quote {
+  margin: 22px 0 12px;
+  padding: 16px 18px;
+  border-left: 4px solid #FFC9D4;
+  border-radius: 0 14px 14px 0;
+  background: #FFFAFB;
+  font-size: 15.5px;
+  color: #5B5468;
+}
+
+.desc { margin: 0 0 6px; font-size: 15px; color: #5B5468; }
+
+.section-h {
+  margin: 26px 0 12px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #9A93A6;
+}
+.section-h::before { content: "✦ "; color: #FFC0CC; }
+
+.bars { display: flex; flex-direction: column; gap: 9px; }
+.bar-row { display: grid; grid-template-columns: 46px 1fr 34px; align-items: center; gap: 10px; }
+.bar-name { font-size: 13px; color: #6E6879; }
+.bar-track { height: 10px; border-radius: 99px; background: #F4EFF6; overflow: hidden; }
+.bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.7s cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+.bar-val { font-size: 12.5px; color: #A9A2B4; text-align: right; font-variant-numeric: tabular-nums; }
+
+.second {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: #FBF9FC;
+  font-size: 13.5px;
+  color: #6E6879;
+}
+.second b { color: #4A4458; }
+.second-avatar { flex: 0 0 auto; line-height: 0; }
+
+.points { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.points li {
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: var(--pink-soft);
+  color: #C25E75;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.match { display: flex; flex-direction: column; gap: 10px; }
+.match-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: #FBF9FC;
+}
+.match-label {
+  flex: 0 0 auto;
+  padding: 3px 9px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.match-label.good { background: #E8F7EE; color: #3E9B6C; }
+.match-label.clash { background: #FFF1E8; color: #C47438; }
+.match-avatar { line-height: 0; }
+.match-name { font-size: 14px; font-weight: 700; }
+.match-name em { margin-left: 6px; font-style: normal; font-weight: 500; font-size: 12.5px; color: var(--muted); }
+
+.tip-box {
+  margin-top: 22px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #F2F8FF, #F7F2FF);
+  font-size: 14px;
+  color: #5B5468;
+}
+.tip-box b { display: block; margin-bottom: 4px; font-size: 12.5px; letter-spacing: 0.1em; color: #7E8FB5; }
+
+.result-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.result-actions .btn-primary { flex: 1 1 100%; }
+
+/* ---------- 图鉴 ---------- */
+.gallery-head { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+.gallery-title { margin: 0; font-size: 24px; font-weight: 800; }
+.gallery-sub { margin: 0 0 18px; font-size: 13.5px; color: var(--muted); }
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: 12px;
+}
+
+.gallery-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 6px 14px;
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: 22px;
+  box-shadow: var(--shadow-sm);
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.gallery-item:hover {
+  transform: translateY(-3px);
+  border-color: #FFD3DC;
+  box-shadow: 0 12px 26px rgba(122, 106, 140, 0.16);
+}
+.gallery-avatar { line-height: 0; }
+.gallery-name { font-size: 14px; font-weight: 800; color: var(--ink); }
+.gallery-title { font-size: 11.5px; color: var(--muted); }
+
+/* ---------- 其它 ---------- */
+.foot {
+  margin-top: 34px;
+  font-size: 11.5px;
+  color: #B0A9BB;
+  text-align: center;
+  line-height: 1.8;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translate(-50%, 20px);
+  max-width: 90vw;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: rgba(59, 55, 67, 0.94);
+  color: #fff;
+  font-size: 13.5px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 40;
+}
+.toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- 小屏 ---------- */
+@media (max-width: 560px) {
+  .app { padding: 30px 16px 40px; }
+  .title { font-size: 34px; }
+  .q-card { padding: 24px 18px 20px; border-radius: 24px; }
+  .q-text { font-size: 18.5px; }
+  .option { font-size: 14.5px; padding: 13px 14px; }
+  .result-card { padding: 24px 18px 20px; border-radius: 26px; }
+  .result-head { flex-direction: column; text-align: center; gap: 12px; }
+  .result-avatar { width: 148px; height: 148px; }
+  #result-name { font-size: 28px; }
+  .match-item { flex-wrap: wrap; }
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+  .bar-row { grid-template-columns: 42px 1fr 30px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+</style>
+</head>
+<body>
+<div class="bg-deco" aria-hidden="true">
+  <span class="paw p1">🐾</span><span class="paw p2">🐾</span>
+  <span class="paw p3">✨</span><span class="paw p4">🐾</span>
+  <span class="blob b1"></span><span class="blob b2"></span>
+</div>
+
+<main class="app">
+
+  <!-- ============ 开场 ============ -->
+  <section class="screen" id="screen-intro">
+    <p class="eyebrow">🐾 萌系人格小测试</p>
+    <h1 class="title">测测你是<br /><span class="hl">什么小动物</span></h1>
+    <p class="lead">24 个生活里的瞬间，8 个维度，16 只毛茸茸。<br />选最像你的那个，别想太久。</p>
+
+    <div class="avatar-row" id="intro-avatars"></div>
+
+    <button class="btn btn-primary" id="btn-start" type="button">开始测试 <span class="arrow">→</span></button>
+
+    <p class="meta">24 题 · 每题 4 个选项 · 约 2 分钟</p>
+    <p class="meta small" id="intro-count"></p>
+  </section>
+
+  <!-- ============ 答题 ============ -->
+  <section class="screen" id="screen-quiz">
+    <div class="quiz-head">
+      <button class="link-btn" id="btn-back" type="button">← 返回</button>
+      <span class="step" id="q-step">1 / 24</span>
+    </div>
+    <div class="progress" aria-hidden="true"><span id="q-bar-fill"></span></div>
+
+    <div class="q-card">
+      <span class="q-index" id="q-index">01</span>
+      <h2 class="q-text" id="q-text"></h2>
+      <div class="options" id="q-options"></div>
+    </div>
+
+    <p class="kbd-hint">键盘 <kbd>1</kbd>–<kbd>4</kbd> 快速选择 · <kbd>←</kbd> 回上一题</p>
+  </section>
+
+  <!-- ============ 结果 ============ -->
+  <section class="screen" id="screen-result">
+    <div class="result-card">
+      <button class="link-btn home" id="btn-result-home" type="button">← 首页</button>
+      <p class="shared-note" id="result-shared-note" hidden>🎁 这是朋友分享给你的结果</p>
+
+      <div class="result-head">
+        <div class="result-avatar" id="result-avatar"></div>
+        <div class="result-id">
+          <p class="result-kicker">你的小动物是</p>
+          <h2 id="result-name"></h2>
+          <p class="result-title" id="result-title"></p>
+          <p class="result-tag" id="result-tag"></p>
+        </div>
+      </div>
+
+      <blockquote class="quote" id="result-quote"></blockquote>
+      <p class="desc" id="result-desc"></p>
+
+      <h3 class="section-h">你的八维</h3>
+      <div class="bars" id="result-bars"></div>
+      <p class="second" id="result-second"></p>
+
+      <h3 class="section-h">你的萌点</h3>
+      <ul class="points" id="result-points"></ul>
+
+      <h3 class="section-h">相性</h3>
+      <div class="match" id="result-match"></div>
+
+      <div class="tip-box">
+        <b>养成建议</b>
+        <span id="result-tip"></span>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn btn-primary" id="btn-again" type="button"><span id="result-again-label">再测一次</span></button>
+        <button class="btn btn-ghost" id="btn-share" type="button">分享给朋友</button>
+        <button class="btn btn-ghost" id="btn-gallery" type="button">小动物图鉴</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 图鉴 ============ -->
+  <section class="screen" id="screen-gallery">
+    <div class="gallery-head">
+      <button class="link-btn" id="btn-gallery-back" type="button">← 返回</button>
+      <h2 class="gallery-title">小动物图鉴</h2>
+    </div>
+    <p class="gallery-sub">共 16 只，点一只看看它长什么样</p>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </section>
+
+  <footer class="foot">
+    灵感来自「测测你是什么小猫」· 本页为独立改作，结果仅供娱乐 🌙
+  </footer>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================================================
+   萌系人格小测试 — 手绘风 SVG 小动物
+   全部由参数生成，无外部图片依赖
+   ============================================================ */
+
+function _mirror(svg) {
+  return `${svg}<g transform="translate(200 0) scale(-1 1)">${svg}</g>`;
+}
+
+function _ears(v) {
+  const B = v.body, I = v.inner, L = v.line;
+  switch (v.ear) {
+    case 'cat':
+      return _mirror(`<path d="M58 84 L64 26 Q66 19 72 24 L98 62 Z" fill="${B}" stroke="${L}" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M67 74 L71 39 Q72 35 75 38 L89 59 Z" fill="${I}"/>`);
+    case 'fox':
+      return _mirror(`<path d="M56 86 L57 16 Q58 9 64 14 L98 62 Z" fill="${B}" stroke="${L}" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M65 74 L66 33 Q66 29 70 32 L88 59 Z" fill="${I}"/>`);
+    case 'dog':
+      return _mirror(`<ellipse cx="50" cy="102" rx="17" ry="35" transform="rotate(16 50 102)" fill="${B}" stroke="${L}" stroke-width="3"/>
+        <ellipse cx="52" cy="104" rx="9" ry="24" transform="rotate(16 52 104)" fill="${I}"/>`);
+    case 'rabbit':
+      return _mirror(`<ellipse cx="73" cy="44" rx="14" ry="33" transform="rotate(-9 73 44)" fill="${B}" stroke="${L}" stroke-width="3"/>
+        <ellipse cx="73" cy="46" rx="7" ry="24" transform="rotate(-9 73 46)" fill="${I}"/>`);
+    case 'hamster':
+      return _mirror(`<circle cx="62" cy="60" r="16" fill="${B}" stroke="${L}" stroke-width="3"/>
+        <circle cx="62" cy="60" r="8.5" fill="${I}"/>`);
+    case 'round':
+      return _mirror(`<circle cx="60" cy="66" r="11" fill="${B}" stroke="${L}" stroke-width="3"/>
+        <circle cx="60" cy="66" r="5.5" fill="${I}"/>`);
+    case 'owl':
+      return _mirror(`<path d="M60 66 L52 34 Q51 27 58 31 L82 52 Z" fill="${B}" stroke="${L}" stroke-width="3" stroke-linejoin="round"/>`);
+    case 'deer':
+      return _mirror(`<ellipse cx="54" cy="66" rx="15" ry="10" transform="rotate(-24 54 66)" fill="${B}" stroke="${L}" stroke-width="3"/>
+        <ellipse cx="54" cy="66" rx="8" ry="5" transform="rotate(-24 54 66)" fill="${I}"/>
+        <path d="M76 54 C70 42 72 32 78 24 M78 24 C73 19 68 18 64 20 M78 24 C83 18 88 18 92 20" fill="none" stroke="${L}" stroke-width="5" stroke-linecap="round"/>`);
+    default:
+      return '';
+  }
+}
+
+function _eyes(v) {
+  const arms = [];
+  const base = (cx, r) => (v.eyeWhite ? `<circle cx="${cx}" cy="102" r="${r}" fill="#FFFBF5"/>` : '');
+  const eye = (cx) => `${base(cx, 9.5)}<circle cx="${cx}" cy="102" r="7" fill="#3A3340"/><circle cx="${cx - 2.2}" cy="99.6" r="2.3" fill="#fff"/>`;
+  const bigEye = (cx) => `${base(cx, 11)}<circle cx="${cx}" cy="102" r="9" fill="#3A3340"/><circle cx="${cx - 3}" cy="98.5" r="3" fill="#fff"/><circle cx="${cx + 3.2}" cy="105.5" r="1.3" fill="#fff" opacity=".9"/>`;
+  const sleepy = (cx) => `<path d="M${cx - 8} 102 q8 7.5 16 0" fill="none" stroke="#3A3340" stroke-width="4" stroke-linecap="round"/>`;
+
+  switch (v.eye) {
+    case 'big':
+      arms.push(bigEye(78), bigEye(122));
+      break;
+    case 'sleepy':
+      arms.push(sleepy(78), sleepy(122));
+      break;
+    case 'wink':
+      arms.push(eye(78), sleepy(122));
+      break;
+    default:
+      arms.push(eye(78), eye(122));
+  }
+  return arms.join('');
+}
+
+function _mouth(v) {
+  switch (v.mouth) {
+    case 'smile':
+      return `<path d="M92 122 q8 9 16 0" fill="none" stroke="#3A3340" stroke-width="3.2" stroke-linecap="round"/>`;
+    case 'o':
+      return `<ellipse cx="100" cy="127" rx="4.2" ry="5.2" fill="#5B4A48"/>`;
+    case 'beak':
+      return `<path d="M91 116 L109 116 L100 131 Z" fill="#F0A93B" stroke="#D08A22" stroke-width="2" stroke-linejoin="round"/>`;
+    case 'w':
+    default:
+      return `<path d="M91 122 q4.5 6 9 0 q4.5 6 9 0" fill="none" stroke="#3A3340" stroke-width="3.2" stroke-linecap="round"/>`;
+  }
+}
+
+function _accessory(v) {
+  switch (v.acc) {
+    case 'glasses':
+      return `<g fill="none" stroke="#3A3340" stroke-width="2.8" stroke-linejoin="round">
+        <circle cx="78" cy="102" r="14.5" fill="rgba(255,255,255,.22)"/>
+        <circle cx="122" cy="102" r="14.5" fill="rgba(255,255,255,.22)"/>
+        <path d="M92.5 102 h15"/><path d="M63.5 100 l-11 -4"/><path d="M136.5 100 l11 -4"/></g>`;
+    case 'scarf':
+      return `<path d="M52 146 q48 24 96 0 l1 15 q-49 23 -98 0 z" fill="#EC6F6F" stroke="#C95454" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M132 160 l10 26 q-2 4 -8 2 l-8 -22 z" fill="#EC6F6F" stroke="#C95454" stroke-width="2" stroke-linejoin="round"/>`;
+    case 'bow':
+      return `<g transform="translate(148 62)">
+        <path d="M0 0 L-15 -11 V11 Z" fill="#F28EA9" stroke="#D9678A" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M0 0 L15 -11 V11 Z" fill="#F28EA9" stroke="#D9678A" stroke-width="2" stroke-linejoin="round"/>
+        <circle r="4.5" fill="#D9678A"/></g>`;
+    case 'leaf':
+      return `<g transform="translate(0 0)">
+        <path d="M136 60 q16 -16 26 -11 q4 12 -11 18 q-11 4 -15 -7 z" fill="#8AC48A" stroke="#5E9E5E" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M138 60 q10 -7 20 -9" fill="none" stroke="#5E9E5E" stroke-width="2"/></g>`;
+    default:
+      return '';
+  }
+}
+
+/**
+ * 生成一只小动物的 SVG
+ * @param {object} a 动物数据（含 av 配置与 id）
+ * @param {number} size 显示尺寸（px）
+ */
+function avatarSVG(a, size = 160) {
+  const v = a.av;
+  const B = v.body, I = v.inner, L = v.line, C = v.cheek || '#FFB3C1';
+  const clipId = `clip-${a.id}`;
+
+  const whiskers = v.whisker
+    ? `${_mirror(`<path d="M40 112 h18 M40 121 h18 M40 130 h18" stroke="${L}" stroke-width="2.6" opacity=".65" stroke-linecap="round"/>`)}`
+    : '';
+
+  const patch = v.patch
+    ? `<g clip-path="url(#${clipId})">
+        <path d="M52 104 a26 26 0 0 1 26 -30 l4 30 z" fill="#E9A96B" opacity=".85"/>
+        <path d="M126 74 a22 22 0 0 1 21 26 l-26 -6 z" fill="#9C8C7C" opacity=".5"/></g>`
+    : '';
+
+  const stripe = v.stripe
+    ? `<g clip-path="url(#${clipId})" stroke="${L}" stroke-width="4" opacity=".5" stroke-linecap="round" fill="none">
+        <path d="M80 62 q5 -10 13 -5"/><path d="M98 58 q4 -10 13 -6"/><path d="M116 62 q5 -9 12 -4"/></g>`
+    : '';
+
+  const faceWhite = v.face === 'white'
+    ? `<ellipse cx="100" cy="113" rx="43" ry="41" fill="#FFFDF8"/>`
+    : '';
+
+  const discs = v.face === 'disc'
+    ? `<circle cx="76" cy="102" r="27" fill="${I}"/><circle cx="124" cy="102" r="27" fill="${I}"/>`
+    : '';
+
+  const flippers = v.face === 'seal'
+    ? `<ellipse cx="46" cy="150" rx="16" ry="11" transform="rotate(-22 46 150)" fill="${B}" stroke="${L}" stroke-width="3"/>
+       ${_mirror(`<ellipse cx="46" cy="150" rx="16" ry="11" transform="rotate(-22 46 150)" fill="${B}" stroke="${L}" stroke-width="3"/>`)}`
+    : '';
+
+  const nose = ['cat', 'fox', 'dog', 'hamster', 'round'].includes(v.ear)
+    ? `<path d="M95 114 h10 q1.5 5 -5 6.5 q-6.5 -1.5 -5 -6.5 z" fill="#7A5C55"/>`
+    : (v.ear === 'rabbit' ? `<ellipse cx="100" cy="116" rx="4.5" ry="3.4" fill="#F19CAB"/>` : '');
+
+  const cheeks = _mirror(
+    `<ellipse cx="65" cy="120" rx="11.5" ry="6.8" fill="${C}" opacity="${v.face === 'white' ? '.5' : '.6'}"/>`
+  );
+
+  return `<svg class="avatar" viewBox="0 0 200 200" width="${size}" height="${size}" role="img" aria-label="${a.name}">
+  <defs><clipPath id="${clipId}"><ellipse cx="100" cy="106" rx="60" ry="56"/></clipPath></defs>
+  <ellipse cx="100" cy="179" rx="44" ry="6.5" fill="#000" opacity=".07"/>
+  ${_ears(v)}
+  <ellipse cx="100" cy="106" rx="60" ry="56" fill="${B}" stroke="${L}" stroke-width="3"/>
+  ${faceWhite}
+  ${discs}
+  ${flippers}
+  ${patch}
+  ${stripe}
+  ${cheeks}
+  ${whiskers}
+  ${nose}
+  ${_eyes(v)}
+  ${_mouth(v)}
+  ${_accessory(v)}
+</svg>`;
+}
+
+</script>
+<script>
+/* ============================================================
+   萌系人格小测试 — 数据层
+   24 题 × 4 选项 ｜ 8 个维度 ｜ 16 种结果
+   ============================================================ */
+
+const DIMS = [
+  { key: 'e', name: '活力', sub: '热闹指数', color: '#F2994A' },
+  { key: 'o', name: '秩序', sub: '计划指数', color: '#5B8DEF' },
+  { key: 'c', name: '好奇', sub: '探索指数', color: '#9B72E0' },
+  { key: 'w', name: '温柔', sub: '共情指数', color: '#EF7EA3' },
+  { key: 'k', name: '韧度', sub: '稳定指数', color: '#3FB98A' },
+  { key: 'b', name: '胆量', sub: '冒险指数', color: '#E2603F' },
+  { key: 'i', name: '独立', sub: '独处指数', color: '#4C8C99' },
+  { key: 'p', name: '玩心', sub: '淘气指数', color: '#E0A800' },
+];
+
+/* ---------------- 16 种小动物 ---------------- */
+const ANIMALS = [
+  {
+    id: 'orange',
+    name: '橘猫',
+    title: '摆烂大师',
+    tag: '状态：正在晒太阳，勿扰',
+    emoji: '🍊',
+    av: { ear: 'cat', body: '#F2A65A', inner: '#FBD9B4', line: '#D98B3E', eye: 'sleepy', mouth: 'w', acc: 'none', cheek: '#FFC2A8' },
+    target: { e: 70, o: 20, c: 55, w: 60, k: 65, b: 45, i: 40, p: 95 },
+    desc: '你有一种天赋：把"算了"说得像人生哲理。别人在焦虑，你在找一个更舒服的姿势。不是不上进，是早就看穿了——很多事急也没用。',
+    points: ['拖延但从不误事', '擅长把复杂的事变简单', '情绪价值极高'],
+    good: 'shiba',
+    clash: 'border',
+    tip: '偶尔把"想做的事"写下来一件，你会发现摆烂的人一旦认真起来很吓人。',
+    quote: '能躺着解决的事，绝不站着解决。',
+  },
+  {
+    id: 'ragdoll',
+    name: '布偶猫',
+    title: '温柔黏人精',
+    tag: '状态：在你腿上，别动',
+    emoji: '🎀',
+    av: { ear: 'cat', body: '#EFE3D6', inner: '#F8C9CE', line: '#C9B7A6', eye: 'big', mouth: 'smile', acc: 'bow', cheek: '#FFC7CF' },
+    target: { e: 55, o: 50, c: 50, w: 95, k: 55, b: 25, i: 10, p: 45 },
+    desc: '你的温柔是自动挡的：谁情绪不对，你比本人先察觉。你需要被需要，也需要被明确地爱着。看似软，其实很有主见——只是懒得争。',
+    points: ['天生的情绪接收器', '黏人但不烦人', '在小事上极其体贴'],
+    good: 'golden',
+    clash: 'black',
+    tip: '把"我没事"换成"我有点难过，你能陪我一下吗"，你会轻松很多。',
+    quote: '我不是离不开你，我是不想离开你。',
+  },
+  {
+    id: 'black',
+    name: '黑猫',
+    title: '夜行独行侠',
+    tag: '状态：在线，但不想说话',
+    emoji: '🌙',
+    av: { ear: 'cat', body: '#565064', inner: '#7A7290', line: '#3B3648', eye: 'dot', mouth: 'w', acc: 'none', cheek: '#8A7FA0', eyeWhite: true },
+    target: { e: 15, o: 50, c: 72, w: 35, k: 65, b: 40, i: 95, p: 40 },
+    desc: '你享受一个人的深夜，也享受突然的专注。别人觉得你冷淡，其实你只是把能量留给真正在乎的事。你的世界很小，但密度很高。',
+    points: ['独处充电 100%', '观察力惊人', '不轻易交心，交了就很久'],
+    good: 'owl',
+    clash: 'otter',
+    tip: '偶尔让人看见一点你的内心，别人才不会把"安静"误读成"不喜欢"。',
+    quote: '我不是社恐，我是对无聊过敏。',
+  },
+  {
+    id: 'calico',
+    name: '三花猫',
+    title: '情绪雷达',
+    tag: '状态：刚刚又共情了三个人',
+    emoji: '🌈',
+    av: { ear: 'cat', body: '#EFDCC6', inner: '#F6B8B8', line: '#C9A98B', eye: 'big', mouth: 'smile', acc: 'none', cheek: '#FFB8C6', patch: true },
+    target: { e: 60, o: 45, c: 70, w: 90, k: 15, b: 35, i: 35, p: 55 },
+    desc: '你的感受力像开了高清：一句话的语气、一个眼神的停顿，你都收得到。这让你很会照顾人，也让你容易内耗。你的心情是有天气的。',
+    points: ['共情能力天花板', '审美在线', '情绪来得快去得也快'],
+    good: 'ragdoll',
+    clash: 'fox',
+    tip: '别人的情绪不是你的责任。学会说"这件事我帮不上"，你会睡得更好。',
+    quote: '我没事，我只是替所有人难过了一下。',
+  },
+  {
+    id: 'tabby',
+    name: '狸花猫',
+    title: '街头发言人',
+    tag: '状态：有意见，现在就说',
+    emoji: '📢',
+    av: { ear: 'cat', body: '#B79B77', inner: '#E3C9A9', line: '#8E7554', eye: 'dot', mouth: 'o', acc: 'none', cheek: '#D9A98B', stripe: true },
+    target: { e: 85, o: 45, c: 60, w: 50, k: 60, b: 95, i: 55, p: 65 },
+    desc: '你是那种在电梯里也敢开口的人。直、快、不怕冷场，错了就认，认完继续。你撑着很多场子，也常常替别人说出他们不敢说的那句。',
+    points: ['行动力比想法快', '不怕冲突', '朋友里的定海神针'],
+    good: 'shiba',
+    clash: 'rabbit',
+    tip: '开口前多留三秒，你的直率就会从"扎人"变成"可靠"。',
+    quote: '有意见就说，憋着容易长结节。',
+  },
+  {
+    id: 'shiba',
+    name: '柴犬',
+    title: '憨憨乐天派',
+    tag: '状态：快乐，且不知道为什么',
+    emoji: '🐕',
+    av: { ear: 'cat', body: '#E8B96A', inner: '#FBE7C4', line: '#C9974A', eye: 'dot', mouth: 'smile', acc: 'none', cheek: '#F5B79A' },
+    target: { e: 88, o: 30, c: 45, w: 60, k: 88, b: 78, i: 25, p: 80 },
+    desc: '你的快乐不需要理由，也不太好被破坏。摔了一跤先笑，被拒绝了说"那算了"，第二天照样满血。你不是没心没肺，你是修复得特别快。',
+    points: ['情绪复原力满格', '天然的气氛组', '不记仇'],
+    good: 'orange',
+    clash: 'owl',
+    tip: '开心的时候也留意一下身边的人，你的节奏对有些人来说有点快。',
+    quote: '难过三分钟，第四分钟去吃饭。',
+  },
+  {
+    id: 'border',
+    name: '边牧',
+    title: '计划通',
+    tag: '状态：正在优化你的流程',
+    emoji: '📋',
+    av: { ear: 'dog', body: '#9AA2B4', inner: '#F2EEE8', line: '#6D7588', eye: 'dot', mouth: 'smile', acc: 'glasses', cheek: '#BCC2D0' },
+    target: { e: 65, o: 95, c: 85, w: 55, k: 60, b: 65, i: 45, p: 40 },
+    desc: '你脑子里常年开着一张表：进度、优先级、备用方案。别人还在讨论，你已经跑完了第一版。你受不了低效，也受不了自己没准备好。',
+    points: ['执行力恐怖', '提前想到三步', '把混乱变成秩序'],
+    good: 'penguin',
+    clash: 'orange',
+    tip: '不是所有事都值得优化。留一点"随便吧"的空间给自己。',
+    quote: '这不是控制欲，这叫预案。',
+  },
+  {
+    id: 'golden',
+    name: '金毛',
+    title: '人形暖炉',
+    tag: '状态：在等你说"我需要你"',
+    emoji: '☀️',
+    av: { ear: 'dog', body: '#F0C46B', inner: '#FBE6BC', line: '#CFA046', eye: 'big', mouth: 'smile', acc: 'scarf', cheek: '#F6B08E' },
+    target: { e: 80, o: 55, c: 50, w: 95, k: 75, b: 50, i: 20, p: 55 },
+    desc: '你的善良是本能，不用想就会伸手。你不擅长拒绝，也不擅长让别人失望。看起来永远有力气，其实也需要有人问一句"你累不累"。',
+    points: ['无条件支持型朋友', '真诚到有点笨', '记得每个人的小习惯'],
+    good: 'ragdoll',
+    clash: 'black',
+    tip: '善良要有边界，你的"不"不会让别人不爱你。',
+    quote: '你先坐下，我去给你倒杯水。',
+  },
+  {
+    id: 'rabbit',
+    name: '白兔',
+    title: '小心脏',
+    tag: '状态：有点紧张，但还能撑',
+    emoji: '🐰',
+    av: { ear: 'rabbit', body: '#F8F4F0', inner: '#FFC9D2', line: '#D8CCC4', eye: 'big', mouth: 'o', acc: 'none', cheek: '#FFC1CB' },
+    target: { e: 35, o: 65, c: 45, w: 85, k: 20, b: 10, i: 45, p: 50 },
+    desc: '你对世界很小心，也很认真。别人一句无心的话能 replay 一整晚，但真到了关键时刻，你比谁都扛得住。你的温柔里藏着韧性。',
+    points: ['高度敏感', '礼貌到让人心疼', '细节控'],
+    good: 'deer',
+    clash: 'tabby',
+    tip: '把脑内的"他是不是讨厌我"写下来，你会发现 90% 是自己吓自己。',
+    quote: '我没有不开心，我只是在提前担心。',
+  },
+  {
+    id: 'fox',
+    name: '狐狸',
+    title: '高段位军师',
+    tag: '状态：已经看穿，但不说',
+    emoji: '🦊',
+    av: { ear: 'fox', body: '#E58A3C', inner: '#FBD9B8', line: '#C06A24', eye: 'dot', mouth: 'w', acc: 'none', cheek: '#F3A98A' },
+    target: { e: 50, o: 70, c: 95, w: 40, k: 75, b: 60, i: 85, p: 55 },
+    desc: '你算得清人心，也懒得说破。你更愿意用结果说话：布局、退让、再一刀切中要害。你不是冷，你只是把情绪放在更靠后的位置。',
+    points: ['洞察力顶级', '不动声色的掌控感', '极强的自我保护'],
+    good: 'owl',
+    clash: 'calico',
+    tip: '偶尔坦白一点真实想法，别人会更敢靠近你。',
+    quote: '我不是不说话，我是在等你说完。',
+  },
+  {
+    id: 'penguin',
+    name: '企鹅',
+    title: '秩序小队长',
+    tag: '状态：按流程进行中',
+    emoji: '🧊',
+    av: { ear: 'none', body: '#3E4759', inner: '#FFFFFF', line: '#2E3542', eye: 'dot', mouth: 'beak', acc: 'scarf', cheek: '#78839A', face: 'white' },
+    target: { e: 55, o: 90, c: 50, w: 70, k: 80, b: 30, i: 50, p: 45 },
+    desc: '你相信稳定的力量：固定的作息、熟悉的路线、说好就做到的人。你不爱冒险，但你是那个所有人都能靠一下的人。',
+    points: ['可靠到可以托付', '守时守约', '低调的组织者'],
+    good: 'border',
+    clash: 'tabby',
+    tip: '偶尔打破一次计划，世界不会塌，你会发现自己还挺喜欢。',
+    quote: '不迟到，是我对这个世界最基础的爱。',
+  },
+  {
+    id: 'otter',
+    name: '水獭',
+    title: '牵手狂魔',
+    tag: '状态：人呢？人都去哪了？',
+    emoji: '🦦',
+    av: { ear: 'round', body: '#A97B5E', inner: '#E8D3BC', line: '#8A6047', eye: 'big', mouth: 'smile', acc: 'none', cheek: '#E09C85', whisker: true },
+    target: { e: 85, o: 35, c: 60, w: 90, k: 60, b: 55, i: 5, p: 90 },
+    desc: '你怕的不是累，是一个人。做什么都想有人一起：吃饭、逛街、发呆。你的快乐很具体——有人回应你，就够了。',
+    points: ['社交电量无限', '情绪外放不藏事', '天生的黏合剂'],
+    good: 'golden',
+    clash: 'black',
+    tip: '试着一个人做一件小事，你会发现独处也没那么可怕。',
+    quote: '你去哪？我也去。',
+  },
+  {
+    id: 'owl',
+    name: '猫头鹰',
+    title: '深夜哲学家',
+    tag: '状态：在想一个没人问的问题',
+    emoji: '🌌',
+    av: { ear: 'owl', body: '#8E7B6B', inner: '#F0E4D6', line: '#6E5E51', eye: 'big', mouth: 'o', acc: 'none', cheek: '#B79A88', face: 'disc' },
+    target: { e: 12, o: 88, c: 95, w: 45, k: 75, b: 20, i: 92, p: 25 },
+    desc: '你的脑内有一个永不停机的会议室。别人睡了，你还在推演：为什么、如果、万一。你需要大量独处来消化这个世界，也需要一个能听懂你说话的人。',
+    points: ['思考深度惊人', '不随大流', '一个人也活得很完整'],
+    good: 'black',
+    clash: 'shiba',
+    tip: '想法说出来才算完成。找一个能接住你长语音的人。',
+    quote: '凌晨三点，我想到一个绝妙的问题。',
+  },
+  {
+    id: 'deer',
+    name: '小鹿',
+    title: '安静观察者',
+    tag: '状态：躲在角落，但看得很清楚',
+    emoji: '🌿',
+    av: { ear: 'deer', body: '#C89A6B', inner: '#F3DCC0', line: '#A2764A', eye: 'big', mouth: 'smile', acc: 'leaf', cheek: '#EBB49B' },
+    target: { e: 30, o: 55, c: 65, w: 80, k: 40, b: 15, i: 75, p: 40 },
+    desc: '你话不多，但什么都看在眼里。你不爱争，不代表没有判断；你安静，是因为热闹太耗电。你身上有一种让人放松的干净感。',
+    points: ['敏锐但不评判', '温柔的旁观者', '需要时间才能熟'],
+    good: 'rabbit',
+    clash: 'tabby',
+    tip: '你的想法值得被听见，别总是等别人先问。',
+    quote: '我不说话，但我都记得。',
+  },
+  {
+    id: 'hamster',
+    name: '仓鼠',
+    title: '囤囤囤',
+    tag: '状态：东西都存好了，安心',
+    emoji: '🌰',
+    av: { ear: 'hamster', body: '#D9C4A9', inner: '#F5E6D2', line: '#B79C7C', eye: 'dot', mouth: 'w', acc: 'none', cheek: '#F0B49A', whisker: true },
+    target: { e: 45, o: 80, c: 40, w: 65, k: 35, b: 20, i: 60, p: 70 },
+    desc: '你的安全感来自"有准备"：冰箱是满的，抽屉里有备用，聊天记录从不删。你不喜欢惊喜，你喜欢一切都在掌控里的小确幸。',
+    points: ['极度靠谱', '收集癖 + 分类癖', '小空间里的国王'],
+    good: 'penguin',
+    clash: 'tabby',
+    tip: '有些东西可以不用准备，空着手出门也是一种自由。',
+    quote: '先别扔，说不定以后用得上。',
+  },
+  {
+    id: 'seal',
+    name: '海豹',
+    title: '躺平冠军',
+    tag: '状态：平躺，且非常满意',
+    emoji: '🫧',
+    av: { ear: 'none', body: '#B9C3CF', inner: '#E7EDF3', line: '#95A1B0', eye: 'sleepy', mouth: 'w', acc: 'none', cheek: '#F3B9BF', whisker: true, face: 'seal' },
+    target: { e: 20, o: 15, c: 45, w: 75, k: 90, b: 25, i: 55, p: 60 },
+    desc: '你早就参透了：人生大部分事，急也没用，卷也没用。你情绪稳定得像一块被海浪冲圆的石头。别人慌，你只是换个更舒服的姿势继续看。',
+    points: ['情绪稳定到离谱', '不内耗', '天然治愈系'],
+    good: 'orange',
+    clash: 'border',
+    tip: '稳定是天赋，但偶尔也要为自己争取一下。',
+    quote: '世界很吵，我选择躺下。',
+  },
+];
+
+/* ---------------- 24 道题 ---------------- */
+const QUESTIONS = [
+  {
+    q: '早上闹钟响了第三遍，你通常……',
+    opts: [
+      { t: '翻身起床，顺手把今天要做的事排个序', w: { o: 2, e: 1 } },
+      { t: '先摸到手机，刷个十分钟再说', w: { p: 2, e: -1, o: -1 } },
+      { t: '躺着发会儿呆，听窗外的声音', w: { c: 1, e: -1, k: 1 } },
+      { t: '整只人缩回被子里：谁也别叫我', w: { e: -2, i: 2, p: 1 } },
+    ],
+  },
+  {
+    q: '突然多出一个完全空白的周末，你会……',
+    opts: [
+      { t: '早就列好清单，出门打卡三家店', w: { o: 2, c: 1 } },
+      { t: '临时约人，人越多越热闹', w: { e: 2, w: 1, p: 1 } },
+      { t: '窝在家里补觉 + 追剧，社交电量归零', w: { e: -2, i: 2 } },
+      { t: '看心情乱走，迷路也算风景', w: { o: -2, b: 2, c: 1 } },
+    ],
+  },
+  {
+    q: '群里有人发了个很有争议的话题，你……',
+    opts: [
+      { t: '直接开麦说观点，说错也认', w: { e: 2, b: 2, w: -1 } },
+      { t: '先看看风向，摸清楚再发言', w: { o: 1, c: 1, k: 1 } },
+      { t: '不掺和，但会私聊关心被冲的那个朋友', w: { w: 2, i: 1 } },
+      { t: '已读不回，安静退出战场', w: { i: 2, e: -1 } },
+    ],
+  },
+  {
+    q: '第一次独自去一座陌生城市，第一件事是……',
+    opts: [
+      { t: '打开地图，把路线和交通研究明白', w: { o: 2, c: 1 } },
+      { t: '走到哪算哪，先逛了再说', w: { b: 2, c: 2, o: -2 } },
+      { t: '找家咖啡馆坐下，安静观察这座城市', w: { c: 2, e: -1, w: 1 } },
+      { t: '先确认住的地方安不安全，其他明天再讲', w: { k: 2, b: -2 } },
+    ],
+  },
+  {
+    q: '计划被临时打乱了，你的第一反应是……',
+    opts: [
+      { t: '当场重排优先级，五分钟内搞定', w: { o: 2, k: 2 } },
+      { t: '有点烦，但很快接受，顺其自然', w: { k: 1, o: -1 } },
+      { t: '干脆摆烂，反正都乱了', w: { p: 2, o: -2, k: -1 } },
+      { t: '情绪先炸一会儿，再慢慢收拾', w: { k: -2, w: 1 } },
+    ],
+  },
+  {
+    q: '朋友在你面前崩溃大哭，你更可能……',
+    opts: [
+      { t: '先抱住 Ta，什么都不说', w: { w: 2 } },
+      { t: '帮 Ta 一条条分析问题出在哪', w: { w: -1, c: 2, o: 1 } },
+      { t: '陪着一起吐槽到深夜', w: { e: 1, w: 2 } },
+      { t: '递上纸巾，然后默默去点份外卖', w: { w: 1, i: 1, k: 1 } },
+    ],
+  },
+  {
+    q: '要学一个全新的东西，你会……',
+    opts: [
+      { t: '先把教程和原理完整刷一遍', w: { c: 2, o: 1 } },
+      { t: '直接上手，坏了再说', w: { b: 2, c: 1, o: -2 } },
+      { t: '找个人一起学，互相监督', w: { e: 1, w: 1, o: 1 } },
+      { t: '先评估值不值得学，别浪费时间', w: { c: -1, o: 1, b: -1 } },
+    ],
+  },
+  {
+    q: '凌晨两点你还醒着，通常在……',
+    opts: [
+      { t: '早睡了，明天还要早起', w: { o: 2, e: -1 } },
+      { t: '刷手机，看到什么都想点进去', w: { c: 2, e: 1, p: 1 } },
+      { t: '突然开始想人生、宇宙和十年后的自己', w: { c: 2, i: 2, e: -1 } },
+      { t: '给朋友发消息，谁回算谁', w: { e: 1, w: 2, i: -2 } },
+    ],
+  },
+  {
+    q: '和在意的人发生冲突，你会……',
+    opts: [
+      { t: '当场说清楚，绝不憋着', w: { b: 2, e: 1 } },
+      { t: '先冷静一晚，第二天再谈', w: { k: 2, o: 1 } },
+      { t: '算了，退一步海阔天空', w: { w: 2, b: -2 } },
+      { t: '不吵了，但会在心里慢慢疏远', w: { i: 2, b: -1 } },
+    ],
+  },
+  {
+    q: '你的房间 / 桌面，最接近哪种描述？',
+    opts: [
+      { t: '每样东西都有固定位置，一眼整齐', w: { o: 2, i: 1 } },
+      { t: '表面整齐就行，抽屉里随缘', w: { o: 1, p: 1 } },
+      { t: '堆成山了才会想起来收一下', w: { o: -2, p: 2 } },
+      { t: '边收边玩，收到一半开始看别的东西', w: { o: -1, c: 1, p: 1 } },
+    ],
+  },
+  {
+    q: '理想的旅行方式更接近……',
+    opts: [
+      { t: '攻略做满，一天跑五个景点', w: { o: 2, c: 1, e: 1 } },
+      { t: '只订机票和第一晚住宿，其余随缘', w: { o: -2, b: 2 } },
+      { t: '找个地方住一周，像本地人一样生活', w: { c: 2, e: -1, i: 1 } },
+      { t: '跟团，省心又不会出错', w: { o: 1, b: -2, k: 1 } },
+    ],
+  },
+  {
+    q: '收到一份很用心的惊喜礼物，你会……',
+    opts: [
+      { t: '当场尖叫，抱着人不撒手', w: { e: 2, w: 1 } },
+      { t: '嘴上说"太贵了"，心里偷偷开心很久', w: { w: 1, k: 1 } },
+      { t: '先研究这东西到底怎么用', w: { c: 2, w: -1 } },
+      { t: '有点不知所措，但会好好收起来', w: { i: 1, w: 1, k: -1 } },
+    ],
+  },
+  {
+    q: '一群人聚餐点菜，你通常是……',
+    opts: [
+      { t: '主动点单，荤素搭配全安排好', w: { o: 2, e: 1 } },
+      { t: '你们点，我什么都吃', w: { w: 2, i: 1 } },
+      { t: '只点自己爱吃的，别人随意', w: { i: 2, b: 1 } },
+      { t: '纠结半小时，最后说"随便"', w: { k: -1, o: -1 } },
+    ],
+  },
+  {
+    q: '排队要等一小时，你会……',
+    opts: [
+      { t: '正好，把缓存的那集剧刷完', w: { p: 2, k: 1 } },
+      { t: '观察周围的人，脑内自动写起小说', w: { c: 2, i: 1 } },
+      { t: '越来越烦躁，反复看还剩多久', w: { k: -2, e: 1 } },
+      { t: '跟旁边的人聊起来', w: { e: 2, w: 1 } },
+    ],
+  },
+  {
+    q: '面对一个需要拍板的决定，你……',
+    opts: [
+      { t: '列一张取舍表，逐项打分', w: { o: 2, c: 1 } },
+      { t: '凭直觉，三秒决定', w: { b: 2, o: -2 } },
+      { t: '问一圈朋友的意见', w: { w: 2, i: -2 } },
+      { t: '能拖就拖，拖到没得选为止', w: { k: -1, o: -1, b: -1 } },
+    ],
+  },
+  {
+    q: '被人当面夸"你好可爱"，你的反应是……',
+    opts: [
+      { t: '大方接受，还顺手回夸对方', w: { e: 2, w: 1 } },
+      { t: '脸红，小声说谢谢', w: { w: 1, i: 1 } },
+      { t: '假装没听见，迅速转移话题', w: { i: 2, k: 1 } },
+      { t: '开始怀疑对方是不是有事求我', w: { c: 1, k: 1, b: -1 } },
+    ],
+  },
+  {
+    q: '新同事入职第一天，你会……',
+    opts: [
+      { t: '主动带 Ta 认路、介绍给所有人', w: { e: 2, w: 2 } },
+      { t: '点头微笑，各忙各的', w: { i: 1, k: 1 } },
+      { t: '先观察几天，再决定要不要熟起来', w: { c: 2, o: 1 } },
+      { t: '把自己踩过的坑写成文档发给 Ta', w: { w: 1, o: 2 } },
+    ],
+  },
+  {
+    q: '手机相册里最多的是……',
+    opts: [
+      { t: '分类整理好，还定期备份', w: { o: 2, i: 1 } },
+      { t: '截图三千张，从来没整理过', w: { o: -2, p: 2 } },
+      { t: '全是猫、云、和路边的小东西', w: { c: 2, w: 1 } },
+      { t: '几乎不拍照，活在当下', w: { p: 1, b: 1, i: 1 } },
+    ],
+  },
+  {
+    q: '遇到一个很难的问题，你更可能……',
+    opts: [
+      { t: '拆成小块，一个接一个解决', w: { o: 2, k: 1 } },
+      { t: '先放一放，说不定明天就有灵感', w: { k: 1, o: -1, p: 1 } },
+      { t: '到处问人，集思广益', w: { e: 1, w: 2, i: -2 } },
+      { t: '硬啃，不睡也要搞明白', w: { b: 2, o: 1, k: -1 } },
+    ],
+  },
+  {
+    q: '你的"充电方式"是……',
+    opts: [
+      { t: '和朋友吃饭聊天到半夜', w: { e: 2, w: 1 } },
+      { t: '一个人散步、听歌、发呆', w: { i: 2, c: 1 } },
+      { t: '睡一整天，谁也别找我', w: { e: -2, k: 1 } },
+      { t: '做点手工、画画、拼乐高', w: { p: 2, i: 1, c: 1 } },
+    ],
+  },
+  {
+    q: '看到一件明显不公平的事，你会……',
+    opts: [
+      { t: '当场站出来说话', w: { b: 2, w: 1, e: 1 } },
+      { t: '先录下来，再想办法处理', w: { o: 1, c: 2, b: 1 } },
+      { t: '心里很难受，但不敢出声', w: { w: 2, b: -2, k: -1 } },
+      { t: '事后写一篇长文发出去', w: { c: 1, w: 1, i: 1 } },
+    ],
+  },
+  {
+    q: '如果朋友要形容你，最可能说的是……',
+    opts: [
+      { t: '"最靠谱的那个"', w: { o: 2, k: 2 } },
+      { t: '"气氛担当"', w: { e: 2, p: 2 } },
+      { t: '"温柔，但有点距离感"', w: { w: 1, i: 2 } },
+      { t: '"脑回路清奇的怪人"', w: { c: 2, p: 2, o: -2 } },
+    ],
+  },
+  {
+    q: '想象三年后的自己，你希望……',
+    opts: [
+      { t: '已经按路线图走到了那一步', w: { o: 2, b: 1 } },
+      { t: '还在尝试新东西，没被定型', w: { c: 2, b: 1 } },
+      { t: '身边还是这些人，一个都没少', w: { w: 2 } },
+      { t: '没想过，先把今天过好', w: { k: 1, o: -2, p: 1 } },
+    ],
+  },
+  {
+    q: '下面哪句话最像你的内心独白？',
+    opts: [
+      { t: '"再检查一遍，别出岔子。"', w: { o: 2, k: 1, b: -1 } },
+      { t: '"来都来了，试试呗。"', w: { b: 2, c: 1, p: 1 } },
+      { t: '他们会不会不开心？', w: { w: 2, k: -1, i: -1 } },
+      { t: '"这事跟我有什么关系。"', w: { i: 2, w: -1, k: 1 } },
+    ],
+  },
+];
+
+</script>
+<script>
+/* ============================================================
+   萌系人格小测试 — 逻辑与界面
+   ============================================================ */
+
+(function () {
+  'use strict';
+
+  const $ = (sel, root) => (root || document).querySelector(sel);
+  const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
+
+  const STORE_COUNT = 'moe-test-count';
+  const STORE_LAST = 'moe-test-last';
+
+  const state = {
+    idx: 0,
+    answers: [],
+    z: null,          // 8 维标准化向量
+    pct: null,        // 8 维展示分（0–100）
+    result: null,
+    second: null,
+    shared: false,
+  };
+
+  /* ---------------- 维度统计量 ----------------
+     把每题各选项的权重看作均匀随机，按题目独立累加，
+     得到每个维度的均值与标准差，用于标准化。 */
+  const STATS = (function () {
+    const s = {};
+    DIMS.forEach((d) => { s[d.key] = { mu: 0, sd: 1 }; });
+    QUESTIONS.forEach((q) => {
+      DIMS.forEach((d) => {
+        const vals = q.opts.map((o) => o.w[d.key] || 0);
+        const n = vals.length;
+        const mu = vals.reduce((a, b) => a + b, 0) / n;
+        const va = vals.reduce((a, b) => a + (b - mu) * (b - mu), 0) / n;
+        s[d.key].mu += mu;
+        s[d.key].sd += va;   // 先累加方差，最后开方
+      });
+    });
+    DIMS.forEach((d) => {
+      s[d.key].sd = Math.sqrt(s[d.key].sd) || 1;
+    });
+    return s;
+  })();
+
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+  // 展示分与 z 值之间的换算：pct = 50 + SCALE * z
+  const SCALE = 14;
+
+  function rawScores(answers) {
+    const raw = {};
+    DIMS.forEach((d) => { raw[d.key] = 0; });
+    answers.forEach((choice, qi) => {
+      const w = QUESTIONS[qi].opts[choice].w;
+      Object.keys(w).forEach((k) => { raw[k] = (raw[k] || 0) + w[k]; });
+    });
+    return raw;
+  }
+
+  function zOf(raw) {
+    const z = {};
+    DIMS.forEach((d) => {
+      z[d.key] = (raw[d.key] - STATS[d.key].mu) / STATS[d.key].sd;
+    });
+    return z;
+  }
+
+  function pctOf(z) {
+    const p = {};
+    DIMS.forEach((d) => {
+      p[d.key] = clamp(Math.round(50 + SCALE * z[d.key]), 2, 98);
+    });
+    return p;
+  }
+
+  // 结果页的目标向量本身就用 0–100 的展示分表示
+  function zOfTarget(t) {
+    const z = {};
+    DIMS.forEach((d) => { z[d.key] = (t[d.key] - 50) / SCALE; });
+    return z;
+  }
+
+  /* ---------------- 匹配 ----------------
+     用标准化向量的方向做余弦匹配：比谁更"像"而不是比谁更"强"，
+     这样 16 种结果的分布才不会被居中类型吃掉。 */
+  const ARCH = ANIMALS.map((a) => {
+    const z = zOfTarget(a.target);
+    let norm = 0;
+    DIMS.forEach((d) => { norm += z[d.key] * z[d.key]; });
+    return { animal: a, z, norm: Math.sqrt(norm) || 1 };
+  });
+
+  function rankAnimals(z) {
+    let un = 0;
+    DIMS.forEach((d) => { un += z[d.key] * z[d.key]; });
+    un = Math.sqrt(un);
+
+    return ARCH.map((x) => {
+      let dot = 0;
+      DIMS.forEach((d) => { dot += z[d.key] * x.z[d.key]; });
+      // 方向余弦为主；向量几乎为零时退化为欧氏距离
+      const cos = un < 1e-6 ? 0 : dot / (un * x.norm);
+      const euclid = Math.sqrt(DIMS.reduce((acc, d) => acc + (z[d.key] - x.z[d.key]) ** 2, 0));
+      return { animal: x.animal, sim: cos, dist: euclid };
+    }).sort((p, q) => (q.sim - p.sim) || (p.dist - q.dist));
+  }
+
+  /* ---------------- 本地存储 ---------------- */
+
+  function getCount() {
+    const n = parseInt(localStorage.getItem(STORE_COUNT) || '0', 10);
+    return Number.isFinite(n) ? n : 0;
+  }
+  function bumpCount() {
+    const n = getCount() + 1;
+    localStorage.setItem(STORE_COUNT, String(n));
+    return n;
+  }
+
+  /* ---------------- 视图切换 ---------------- */
+
+  function show(id) {
+    $$('.screen').forEach((s) => s.classList.toggle('is-active', s.id === id));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ---------------- 开场 ---------------- */
+
+  function renderIntro() {
+    $('#intro-avatars').innerHTML = ['orange', 'rabbit', 'otter']
+      .map((id) => avatarSVG(ANIMALS.find((x) => x.id === id), 96))
+      .join('');
+
+    const n = getCount();
+    $('#intro-count').textContent = n > 0
+      ? `这台设备已经测过 ${n} 次啦`
+      : '还没有人在这台设备上测过，你可以是第一个';
+    show('screen-intro');
+  }
+
+  /* ---------------- 答题 ---------------- */
+
+  function renderQuestion() {
+    const q = QUESTIONS[state.idx];
+    const total = QUESTIONS.length;
+
+    $('#q-step').textContent = `${state.idx + 1} / ${total}`;
+    $('#q-bar-fill').style.width = `${((state.idx + 1) / total) * 100}%`;
+    $('#q-text').textContent = q.q;
+    $('#q-index').textContent = String(state.idx + 1).padStart(2, '0');
+
+    const box = $('#q-options');
+    box.innerHTML = '';
+    box.classList.remove('anim-in');
+    void box.offsetWidth;
+    box.classList.add('anim-in');
+
+    q.opts.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'option';
+      btn.innerHTML = `<span class="option-key">${'ABCD'[i]}</span><span class="option-text">${opt.t}</span>`;
+      btn.addEventListener('click', () => choose(i));
+      box.appendChild(btn);
+    });
+
+    show('screen-quiz');
+  }
+
+  let locked = false;
+  function choose(i) {
+    if (locked) return;
+    locked = true;
+
+    const btn = $$('#q-options .option')[i];
+    if (btn) btn.classList.add('is-picked');
+
+    state.answers[state.idx] = i;
+
+    setTimeout(() => {
+      locked = false;
+      if (state.idx < QUESTIONS.length - 1) {
+        state.idx += 1;
+        renderQuestion();
+      } else {
+        finish();
+      }
+    }, 190);
+  }
+
+  function goBack() {
+    if (state.idx === 0) { renderIntro(); return; }
+    state.idx -= 1;
+    renderQuestion();
+  }
+
+  /* ---------------- 结果 ------------- */
+
+  function finish() {
+    state.shared = false;
+    const raw = rawScores(state.answers);
+    state.z = zOf(raw);
+    state.pct = pctOf(state.z);
+
+    const ranked = rankAnimals(state.z);
+    state.result = ranked[0].animal;
+    state.second = ranked[1].animal;
+
+    bumpCount();
+    localStorage.setItem(STORE_LAST, state.result.id);
+    renderResult();
+  }
+
+  function previewAnimal(a) {
+    // 只读预览：直接用该动物的目标向量
+    state.z = zOfTarget(a.target);
+    state.pct = Object.assign({}, a.target);
+    state.result = a;
+    state.shared = false;
+    state.second = rankAnimals(state.z).filter((r) => r.animal.id !== a.id)[0].animal;
+    renderResult();
+  }
+
+  function renderResult() {
+    const a = state.result;
+    const p = state.pct;
+
+    $('#result-avatar').innerHTML = avatarSVG(a, 168);
+    $('#result-name').textContent = a.name;
+    $('#result-title').textContent = a.title;
+    $('#result-tag').textContent = a.tag;
+    $('#result-desc').textContent = a.desc;
+    $('#result-quote').textContent = '「' + a.quote + '」';
+    $('#result-tip').textContent = a.tip;
+    $('#result-points').innerHTML = a.points.map((x) => `<li>${x}</li>`).join('');
+
+    $('#result-bars').innerHTML = DIMS.map((d) => `
+      <div class="bar-row">
+        <span class="bar-name">${d.name}</span>
+        <span class="bar-track"><span class="bar-fill" style="width:${p[d.key]}%;background:${d.color}"></span></span>
+        <span class="bar-val">${p[d.key]}</span>
+      </div>`).join('');
+
+    const good = ANIMALS.find((x) => x.id === a.good);
+    const clash = ANIMALS.find((x) => x.id === a.clash);
+    $('#result-match').innerHTML = `
+      <div class="match-item">
+        <span class="match-label good">很合拍</span>
+        <span class="match-avatar">${avatarSVG(good, 54)}</span>
+        <span class="match-name">${good.name}<em>${good.title}</em></span>
+      </div>
+      <div class="match-item">
+        <span class="match-label clash">需磨合</span>
+        <span class="match-avatar">${avatarSVG(clash, 54)}</span>
+        <span class="match-name">${clash.name}<em>${clash.title}</em></span>
+      </div>`;
+
+    const sec = state.second;
+    const secZ = zOfTarget(sec.target);
+    let un = 0, sn = 0, dot = 0;
+    DIMS.forEach((d) => {
+      un += state.z[d.key] ** 2;
+      sn += secZ[d.key] ** 2;
+      dot += state.z[d.key] * secZ[d.key];
+    });
+    const sim = Math.round(50 + 50 * (dot / (Math.sqrt(un * sn) || 1)));
+    $('#result-second').innerHTML = `
+      <span class="second-avatar">${avatarSVG(sec, 46)}</span>
+      <span>你也有 <b>${sec.name}（${sec.title}）</b> 的一面，相似度约 ${clamp(sim, 30, 95)}%</span>`;
+
+    $('#result-shared-note').hidden = !state.shared;
+    $('#result-again-label').textContent = state.shared ? '我也来测一次' : '再测一次';
+
+    show('screen-result');
+  }
+
+  /* ---------------- 图鉴 ---------------- */
+
+  function renderGallery() {
+    $('#gallery-grid').innerHTML = ANIMALS.map((a) => `
+      <button class="gallery-item" data-id="${a.id}" type="button">
+        <span class="gallery-avatar">${avatarSVG(a, 104)}</span>
+        <span class="gallery-name">${a.name}</span>
+        <span class="gallery-title">${a.title}</span>
+      </button>`).join('');
+
+    $$('#gallery-grid .gallery-item').forEach((el) => {
+      el.addEventListener('click', () => previewAnimal(ANIMALS.find((x) => x.id === el.dataset.id)));
+    });
+
+    show('screen-gallery');
+  }
+
+  /* ---------------- 分享 ---------------- */
+
+  function share() {
+    const base = location.href.split('#')[0];
+    const url = `${base}#r=${state.result.id}`;
+    const text = `我测出来是「${state.result.name}·${state.result.title}」，你是什么小动物？`;
+
+    if (navigator.share) {
+      navigator.share({ title: '萌系人格小测试', text, url }).catch(() => {});
+      return;
+    }
+    const fallback = () => toast('复制这个链接发给朋友：' + url);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(`${text} ${url}`)
+        .then(() => toast('链接已复制，发给朋友就能看到你的结果'))
+        .catch(fallback);
+    } else {
+      fallback();
+    }
+  }
+
+  let toastTimer = null;
+  function toast(msg) {
+    const el = $('#toast');
+    el.textContent = msg;
+    el.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('is-on'), 2800);
+  }
+
+  function readHash() {
+    const m = /#r=([a-z-]+)/.exec(location.hash);
+    if (!m) return false;
+    const a = ANIMALS.find((x) => x.id === m[1]);
+    if (!a) return false;
+
+    state.z = zOfTarget(a.target);
+    state.pct = Object.assign({}, a.target);
+    state.result = a;
+    state.second = rankAnimals(state.z).filter((r) => r.animal.id !== a.id)[0].animal;
+    state.shared = true;
+    renderResult();
+    return true;
+  }
+
+  /* ---------------- 事件绑定 ---------------- */
+
+  function bind() {
+    $('#btn-start').addEventListener('click', () => {
+      state.idx = 0;
+      state.answers = [];
+      renderQuestion();
+    });
+    $('#btn-back').addEventListener('click', goBack);
+    $('#btn-result-home').addEventListener('click', () => {
+      if (location.hash) history.replaceState(null, '', location.pathname);
+      renderIntro();
+    });
+    $('#btn-again').addEventListener('click', () => {
+      state.idx = 0;
+      state.answers = [];
+      renderQuestion();
+    });
+    $('#btn-gallery').addEventListener('click', renderGallery);
+    $('#btn-gallery-back').addEventListener('click', () => {
+      if (state.result && state.answers.length === QUESTIONS.length) renderResult();
+      else renderIntro();
+    });
+    $('#btn-share').addEventListener('click', share);
+
+    document.addEventListener('keydown', (e) => {
+      if (!$('#screen-quiz').classList.contains('is-active')) return;
+      if (['1', '2', '3', '4'].includes(e.key)) choose(Number(e.key) - 1);
+      if (e.key === 'ArrowLeft') goBack();
+    });
+  }
+
+  /* ---------------- 启动 ---------------- */
+
+  document.addEventListener('DOMContentLoaded', () => {
+    bind();
+    if (!readHash()) renderIntro();
+  });
+})();
+
+</script>
+</body>
+</html>
